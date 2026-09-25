@@ -20,17 +20,14 @@ CANDIDATE_SELECTION="${CANDIDATE_SELECTION:-entropy_topk}"
 CANDIDATE_SELECTION_SEED="${CANDIDATE_SELECTION_SEED:-0}"
 CANDIDATE_WEIGHTING="${CANDIDATE_WEIGHTING:-auto}"
 RANDOM_CANDIDATE_WEIGHTING="${RANDOM_CANDIDATE_WEIGHTING:-uniform}"
-# Optional center-crop preprocessing. false keeps the original input; when
-# enabled, CROP_RATIO is the retained width/height fraction and the result is
-# resized back before entropy ranking and attack evaluation.
+
 CROP_ENABLED="${CROP_ENABLED:-false}"
 CROP_RATIO="${CROP_RATIO:-0.98}"
 CROP_INPUT_ROOT="${CROP_INPUT_ROOT:-$OUTPUT_ROOT/.crop_inputs}"
 CROP_HELPER="${CROP_HELPER:-$PROJECT_ROOT/src/crop_resize_image.py}"
 SEQUENTIAL_SEARCH_STRATEGY="${SEQUENTIAL_SEARCH_STRATEGY:-pareto_beam}"
 SEQUENTIAL_BEAM_WIDTH="${SEQUENTIAL_BEAM_WIDTH:-}"
-# Comma-separated physical GPU ids. Empty keeps the original single-process
-# execution; e.g. GPU_IDS=0,1,3 launches one worker per GPU.
+
 GPU_IDS="${GPU_IDS:-}"
 DEVICE="${DEVICE:-cuda:0}"
 strategy_from_cli=0
@@ -593,7 +590,6 @@ validate_configuration
 build_manifest
 print_configuration
 
-# On an interrupted run, keep any partial results that were already produced.
 trap 'aggregate_results || true' EXIT
 run_batch
 trap - EXIT
